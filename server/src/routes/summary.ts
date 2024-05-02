@@ -25,11 +25,10 @@ summaryRouter.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await db.query("SELECT * FROM summary WHERE id = $1", [id]);
-    if (result.rows.length) {
-      res.json(result.rows[0]);
-    } else {
-      res.status(404).send("Summary not found");
-    }
+
+    if (!result.rows.length) res.status(404).send("Summary not found");
+
+    res.json(result.rows[0]);
   } catch (e) {
     next(e);
   }
@@ -45,6 +44,7 @@ summaryRouter.post("/", async (req, res, next) => {
       "INSERT INTO summary (text, audience, purpose, result, revisionNumber, parent) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [params.text, params.audience, params.purpose, result, 0, null]
     );
+
     res.status(201).json(newEntry.rows[0]);
   } catch (e) {
     next(e);
@@ -77,11 +77,10 @@ summaryRouter.delete("/:id", async (req, res, next) => {
       "DELETE FROM summary WHERE id = $1 RETURNING *",
       [id]
     );
-    if (deleted.rows.length) {
-      res.json(deleted.rows[0]);
-    } else {
-      res.status(404).send("Summary not found");
-    }
+
+    if (!deleted.rows.length) res.status(404).send("Summary not found");
+
+    res.json(deleted.rows[0]);
   } catch (e) {
     next(e);
   }

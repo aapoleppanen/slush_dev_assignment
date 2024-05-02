@@ -8,7 +8,7 @@ type Props = {
 export function ArticleSummary({ text, loading }: Props) {
   return (
     <>
-      <h2 className="my-4 text-xl font-bold">
+      <h2 className="my-4 text-l font-bold">
         This web app allows you to effectively summarize articles for different
         purposes.
       </h2>

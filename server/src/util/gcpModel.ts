@@ -18,7 +18,7 @@ export const instanceBaseParams: Omit<
   max_tokens: 128,
   top_k: 10,
   top_p: 1,
-  temperature: 0.8,
+  temperature: 1.0,
   raw_response: true,
 };
 
@@ -46,6 +46,8 @@ export const sendRequest = async (instances: GCPModelRequestParams["instances"])
 
   const parsedResponse: GCPRequestResponse = await response.json();
 
+  // Log the prompt and response as a sanity check
+  // since sometimes the model does not return anything
   console.log(data);
   console.log(parsedResponse);
 

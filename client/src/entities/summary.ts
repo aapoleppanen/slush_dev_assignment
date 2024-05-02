@@ -4,7 +4,8 @@ import { useCallback, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 
 const baseUrl = "/api/summary";
-const filterFn = (key: unknown) => typeof key === "string" && key.startsWith(baseUrl)
+const filterFn = (key: unknown) =>
+  typeof key === "string" && key.startsWith(baseUrl);
 
 export const useSummary = (id: Summary["id"]) => {
   const { data, error, isLoading } = useSWR<Summary>(`${baseUrl}/${id}`);
@@ -46,18 +47,21 @@ export const useCreateSummary = () => {
   const { mutate } = useSWRConfig();
   const [loading, setLoading] = useState(false);
 
-  const createSummary = async (summary: ArticleSummarizerFormSchema) => {
-    setLoading(true);
-    const response = await fetch(baseUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(summary),
-    });
-    setLoading(false);
-    const data = await response.json();
-    mutate(filterFn)
-    return data;
-  };
+  const createSummary = useCallback(
+    async (summary: ArticleSummarizerFormSchema) => {
+      setLoading(true);
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(summary),
+      });
+      setLoading(false);
+      const data = await response.json();
+      mutate(filterFn);
+      return data;
+    },
+    [mutate]
+  );
 
   return { createSummary, loading };
 };
@@ -92,6 +96,7 @@ export const useDeleteSummary = () => {
         filterFn,
         (summaries: Summary[] | undefined) =>
           (summaries ?? []).filter((summary) => summary.id !== id),
+        false
       ); // Optimistically update the cache
       await fetch(`${baseUrl}/${id}`, {
         method: "DELETE",

@@ -38,10 +38,18 @@ const targetData = [
 ] as const;
 
 const formSchema = z.object({
-  text: z.string(),
+  text: z
+    .string()
+    .max(500, {
+      message: "Text must be less than 500 characters due to model limitations",
+    })
+    .min(1, { message: "Did forget to fill in the text?" }),
   audience: z.enum(["twitter", "linkedin", "group_chat"]),
   purpose: z.enum(["sell", "inform"]),
-  customInstructions: z.string().optional(),
+  customInstructions: z
+    .string()
+    .max(200, "Custom instructions must be less than 200 characters")
+    .optional(),
 });
 
 export type ArticleSummarizerFormSchema = z.infer<typeof formSchema>;
@@ -52,7 +60,11 @@ type Props = {
   loading?: boolean;
 };
 
-export function ArticleSummarizerForm({ onSubmit, defaultValues, loading }: Props) {
+export function ArticleSummarizerForm({
+  onSubmit,
+  defaultValues,
+  loading,
+}: Props) {
   const form = useForm<ArticleSummarizerFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
@@ -63,9 +75,7 @@ export function ArticleSummarizerForm({ onSubmit, defaultValues, loading }: Prop
     },
   });
 
-  const submitHandler = form.handleSubmit((data) => {
-    onSubmit(data);
-  });
+  const submitHandler = form.handleSubmit((data) => onSubmit(data));
 
   return (
     <Form {...form}>
@@ -78,7 +88,11 @@ export function ArticleSummarizerForm({ onSubmit, defaultValues, loading }: Prop
               <FormItem>
                 <FormLabel>Text</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Enter text here" className="resize-none" {...field} />
+                  <Textarea
+                    placeholder="Enter text here"
+                    className="resize-none"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -163,7 +177,12 @@ export function ArticleSummarizerForm({ onSubmit, defaultValues, loading }: Prop
             )}
           />
         </div>
-        <Button type="submit" aria-label="Submit" className="w-full" disabled={loading}>
+        <Button
+          type="submit"
+          aria-label="Submit"
+          className="w-full"
+          disabled={loading}
+        >
           Generate
         </Button>
       </form>

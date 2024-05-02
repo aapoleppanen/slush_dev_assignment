@@ -22,9 +22,7 @@ const getPrompt = (params: CreateSummaryParams): string => {
       break;
   }
 
-  if (customInstructions) {
-    prompt += `Additional Instructions: ${customInstructions}\n`;
-  }
+  if (customInstructions) prompt += `Additional Instructions: ${customInstructions}\n`;
 
   prompt += "The content of the post should be a summary of the text provided.";
 

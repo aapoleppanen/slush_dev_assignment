@@ -2,6 +2,8 @@ export type GCPModelRequestParams = {
   apiEndpoint: string;
   projectId: string;
   endpointId: string;
+  // note: this structure is unique to llama models
+  // for others, parameters are a separate key and not under instances
   instances: {
     prompt: string;
     max_tokens: number;

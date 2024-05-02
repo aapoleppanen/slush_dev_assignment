@@ -46,9 +46,9 @@ export default function RecentSummaries() {
             >
               <XIcon className="h-4 w-4" />
             </button>
-            <CardContent
-            className="max-w-[300px] text-ellipsis overflow-hidden whitespace-nowrap"
-            >{summary.result}</CardContent>
+            <CardContent className="max-w-[300px] text-ellipsis overflow-hidden whitespace-nowrap">
+              {summary.result}
+            </CardContent>
           </Card>
         ))}
       </div>
