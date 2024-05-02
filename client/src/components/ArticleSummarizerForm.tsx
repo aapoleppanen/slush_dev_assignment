@@ -40,15 +40,15 @@ const targetData = [
 const formSchema = z.object({
   text: z
     .string()
-    .max(500, {
-      message: "Text must be less than 500 characters due to model limitations",
+    .max(2500, {
+      message: "Text must be less than 2500 characters due to model limitations",
     })
     .min(1, { message: "Did forget to fill in the text?" }),
   audience: z.enum(["twitter", "linkedin", "group_chat"]),
   purpose: z.enum(["sell", "inform"]),
   customInstructions: z
     .string()
-    .max(200, "Custom instructions must be less than 200 characters")
+    .max(1000, "Custom instructions must be less than 1000 characters")
     .optional(),
 });
 

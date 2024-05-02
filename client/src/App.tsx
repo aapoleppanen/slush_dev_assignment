@@ -20,8 +20,8 @@ export default function App() {
   };
 
   return (
-    <main className="flex h-screen w-screen items-center justify-center p-4 gap-4">
-      <Card className="w-1/4 h-full">
+    <main className="flex flex-col md:flex-row md:h-screen w-screen items-center justify-center p-4 gap-4">
+      <Card className="w-full md:w-1/4 h-full">
         <CardHeader>
           <CardTitle>
             Article Summarizer
@@ -34,7 +34,7 @@ export default function App() {
           />
         </CardContent>
       </Card>
-      <div className="w-3/4 flex flex-col h-full">
+      <div className="w-full md:w-3/4 flex flex-col h-full">
         <Card className="flex-1">
           <CardContent>
             <ArticleSummary
