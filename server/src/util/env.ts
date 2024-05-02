@@ -8,4 +8,5 @@ export const env = {
   API_ENDPOINT: process.env.API_ENDPOINT || "",
   PROJECT_ID: process.env.PROJECT_ID || "",
   ENDPOINT_ID: process.env.ENDPOINT_ID || "",
+  DATABASE_URL: process.env.DATABASE_URL || "",
 }
